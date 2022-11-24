@@ -1,0 +1,32 @@
+import "antd/dist/antd.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./Pages/Login/Login";
+import PageNotFound from "./Pages/PageNotFound";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import { AuthProvider } from "./components/Auth";
+import RequireAuth from "./components/RequireAuth";
+
+function App() {
+  return (
+    <>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route index path="/" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAuth>
+                  <Dashboard />
+                </RequireAuth>
+              }
+            />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </>
+  );
+}
+
+export default App;
